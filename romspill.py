@@ -89,7 +89,7 @@ spiller_gruppe = pygame.sprite.Group()
 skudd_gruppe = pygame.sprite.Group()
 
 # Spillobjekter
-spiller = Spiller(100, 64, 64, "skip_lite.png")
+spiller = Spiller(100, 64, 64, "bilder/skip.png")
 spiller_gruppe.add(spiller)
 
 # Tid
