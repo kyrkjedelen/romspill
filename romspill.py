@@ -73,24 +73,32 @@ class Skudd(pygame.sprite.Sprite):
             self.posisjonsvektor_sentrum.update(self.posisjonsvektor_sentrum.x + self.retnignsvektor.x * self.fart * dt, self.posisjonsvektor_sentrum.y + self.retnignsvektor.y * self.fart * dt)
             self.rect.centerx = self.posisjonsvektor_sentrum.x
             self.rect.centery = self.posisjonsvektor_sentrum.y
+class Maal(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.bredde = random.randrange(8, 32)
+        self.hoyde = random.randrange(8, 32)
+        pos_x = random.randrange(0, vindustorrelse_x - self.bredde)
+        pos_y = random.randrange(0, vindustorrelse_x - self.hoyde)
+        self.posisjonsvektor = pygame.math.Vector2(pos_x, pos_y)
+        self.image = pygame.Surface((self.bredde, self.hoyde))
+        self.image.fill(rod)
+        self.rect = self.image.get_rect(x = self.posisjonsvektor.x, y = self.posisjonsvektor.y)
 
-# class maal(Objekt):
-#     def __init__():
-#         tilfeldigTall = random.randint(8, 32)
-#         tilfeldigPosisjonX = random.randint(0, vinduStorrelseX - tilfeldigTall)
-#         tilfeldigPosisjonY = random.randint(0, vinduStorrelseY - tilfeldigTall)
-#         super().__init__("maal.png", tilfeldigPosisjonX, tilfeldigPosisjonY, tilfeldigTall, tilfeldigTall)
 
 # Spillvariabler
-siste_tastatur_vektor_med_verdi = pygame.math.Vector2(1, 0)
+siste_tastatur_vektor_med_verdi = pygame.math.Vector2(0, 1)
 
 # Spillgrupper/lister
 spiller_gruppe = pygame.sprite.Group()
 skudd_gruppe = pygame.sprite.Group()
-
+maal_gruppe = pygame.sprite.Group()
 # Spillobjekter
 spiller = Spiller(100, 64, 64, "bilder/skip.png")
 spiller_gruppe.add(spiller)
+
+for _ in range(20):
+    maal_gruppe.add(Maal())
 
 # Tid
 clock = pygame.time.Clock()
@@ -134,5 +142,6 @@ while spillKjorer:
     skudd_gruppe.update()
 
     skudd_gruppe.draw(vindu)
+    maal_gruppe.draw(vindu)
     spiller_gruppe.draw(vindu)
     pygame.display.update()
