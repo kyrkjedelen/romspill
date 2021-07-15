@@ -76,14 +76,16 @@ class Skudd(pygame.sprite.Sprite):
 class Maal(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.bredde = random.randrange(8, 32)
-        self.hoyde = random.randrange(8, 32)
+    
+        self.bredde = random.randrange(8, 64)
+        self.hoyde = random.randrange(8, 64)
         pos_x = random.randrange(0, vindustorrelse_x - self.bredde)
         pos_y = random.randrange(0, vindustorrelse_x - self.hoyde)
         self.posisjonsvektor = pygame.math.Vector2(pos_x, pos_y)
         self.image = pygame.Surface((self.bredde, self.hoyde))
         self.image.fill(rod)
         self.rect = self.image.get_rect(x = self.posisjonsvektor.x, y = self.posisjonsvektor.y)
+
 
 
 # Spillvariabler
@@ -138,9 +140,15 @@ while spillKjorer:
             if hendelse.key == pygame.K_SPACE:
                 spiller.skyt(siste_tastatur_vektor_med_verdi)
 
+    if len(skudd_gruppe.sprites()) > 0 and len(maal_gruppe.sprites()) > 0:
+        for maal in maal_gruppe.sprites():
+            for skudd in skudd_gruppe.sprites():
+                if(maal.rect.colliderect(skudd.rect)):
+                    skudd.kill()
+                    maal.kill()
+
     spiller.beveg(tastatur_vektor, siste_tastatur_vektor_med_verdi)
     skudd_gruppe.update()
-
     skudd_gruppe.draw(vindu)
     maal_gruppe.draw(vindu)
     spiller_gruppe.draw(vindu)
